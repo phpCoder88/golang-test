@@ -1,4 +1,4 @@
-module github.com/phpCoder88/url-shortener
+module github.com/phpCoder88/golang-test
 
 go 1.16
 

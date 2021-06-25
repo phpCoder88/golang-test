@@ -9,9 +9,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/phpCoder88/url-shortener/internal/config"
-	"github.com/phpCoder88/url-shortener/internal/http/routes"
-	"github.com/phpCoder88/url-shortener/internal/ioc"
+	"github.com/phpCoder88/golang-test/internal/config"
+	"github.com/phpCoder88/golang-test/internal/http/routes"
+	"github.com/phpCoder88/golang-test/internal/ioc"
 
 	"go.uber.org/zap"
 )

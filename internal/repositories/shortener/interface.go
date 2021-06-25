@@ -1,6 +1,6 @@
 package shortener
 
-import "github.com/phpCoder88/url-shortener/internal/entities"
+import "github.com/phpCoder88/golang-test/internal/entities"
 
 type ShortURLRepository interface {
 	FindAll() ([]entities.ShortURL, error)

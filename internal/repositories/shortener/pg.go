@@ -3,7 +3,7 @@ package shortener
 import (
 	"github.com/jmoiron/sqlx"
 
-	"github.com/phpCoder88/url-shortener/internal/entities"
+	"github.com/phpCoder88/golang-test/internal/entities"
 )
 
 type PgRepository struct {

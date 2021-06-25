@@ -3,9 +3,9 @@ package routes
 import (
 	"net/http"
 
-	"github.com/phpCoder88/url-shortener/internal/http/handlers"
-	"github.com/phpCoder88/url-shortener/internal/http/middlewares"
-	"github.com/phpCoder88/url-shortener/internal/ioc"
+	"github.com/phpCoder88/golang-test/internal/http/handlers"
+	"github.com/phpCoder88/golang-test/internal/http/middlewares"
+	"github.com/phpCoder88/golang-test/internal/ioc"
 
 	gHandlers "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"

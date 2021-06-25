@@ -23,11 +23,11 @@ package main
 import (
 	"log"
 
-	"github.com/phpCoder88/url-shortener/internal/config"
-	"github.com/phpCoder88/url-shortener/internal/ioc"
-	"github.com/phpCoder88/url-shortener/internal/server"
-	"github.com/phpCoder88/url-shortener/internal/storages/postgres"
-	"github.com/phpCoder88/url-shortener/internal/version"
+	"github.com/phpCoder88/golang-test/internal/config"
+	"github.com/phpCoder88/golang-test/internal/ioc"
+	"github.com/phpCoder88/golang-test/internal/server"
+	"github.com/phpCoder88/golang-test/internal/storages/postgres"
+	"github.com/phpCoder88/golang-test/internal/version"
 
 	"go.uber.org/zap"
 )

@@ -1,7 +1,6 @@
 module github.com/phpCoder88/golang-test
 
 // +heroku goVersion go1.16
-// +heroku install github.com/golang-migrate/migrate/v4/cmd/migrate
 go 1.16
 
 require (

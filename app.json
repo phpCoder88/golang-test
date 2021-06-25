@@ -2,7 +2,8 @@
   "name": "URL Shortener",
   "description": "App for making short URLs",
   "keywords": [
-    "go"
+    "go",
+    "URL"
   ],
   "image": "heroku/go:1.16",
   "mount_dir": "src/github.com/phpCoder88/golang-test",

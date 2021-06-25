@@ -3,4 +3,4 @@
   go-version = "go1.16.3"
   install = [ "./cmd/..." ]
   ensure = "false"
-  additional-tools = ["github.com/golang-migrate/migrate"]
+  additional-tools = ["github.com/golang-migrate/migrate@v3.4.0"]

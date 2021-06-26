@@ -22,7 +22,7 @@ func main() {
 	// Add your routes as needed
 
 	port := os.Getenv("PORT")
-	if port != "" {
+	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
 

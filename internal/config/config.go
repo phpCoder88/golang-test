@@ -23,6 +23,7 @@ type ServerConfig struct {
 }
 
 type DBConfig struct {
+	DSN      string
 	Host     string `default:"localhost"`
 	Port     uint16 `default:"5432"`
 	Name     string `default:"shortener"`
@@ -46,6 +47,11 @@ func GetConfig() (*Config, error) {
 	intPort, err := strconv.ParseUint(port, 10, 64)
 	if port != "" && err != nil {
 		serverConf.Port = uint16(intPort)
+	}
+
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn != "" {
+		dbConf.DSN = dsn
 	}
 
 	log.Println(serverConf)

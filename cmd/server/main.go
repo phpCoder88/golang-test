@@ -23,6 +23,8 @@ package main
 import (
 	"log"
 
+	"github.com/phpCoder88/golang-test/internal/storages/postgres"
+
 	"github.com/phpCoder88/golang-test/internal/config"
 	"github.com/phpCoder88/golang-test/internal/ioc"
 	"github.com/phpCoder88/golang-test/internal/server"
@@ -59,8 +61,13 @@ func main() {
 		return
 	}
 
+	db, err := postgres.NewPgConnection(conf.DB.DSN, conf.DB.Host, conf.DB.Port, conf.DB.Name, conf.DB.User, conf.DB.Password)
+	if err != nil {
+		slogger.Fatal("Can't connect to the database.", "err", err)
+	}
+
 	slogger.Info("Configuring the application units...")
-	container := ioc.NewContainer(nil)
+	container := ioc.NewContainer(db)
 	apiServer := server.NewServer(slogger, conf, container)
 	err = apiServer.Run()
 	if err != nil {

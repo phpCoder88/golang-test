@@ -16,7 +16,7 @@ GO_BUILD_ARGS = \
 build:
 	@echo "+ $@"
 	@mkdir -p $(BUILD_DIR)
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o "./$(BUILD_DIR)/shortener" ./cmd/server
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build $(GO_BUILD_ARGS) -o "./$(BUILD_DIR)/shortener" ./cmd/server
 
 .PHONY: test
 test:

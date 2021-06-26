@@ -15,7 +15,7 @@ const (
 	connMaxIdleTime    = 20
 )
 
-func NewPgConnection(dsn string, host string, port uint16, dbName, user, password string) (*sqlx.DB, error) {
+func NewPgConnection(dsn, host string, port uint16, dbName, user, password string) (*sqlx.DB, error) {
 	if dsn == "" {
 		dsn = fmt.Sprintf("host=%s port=%d user=%s dbname=%s sslmode=disable password=%s",
 			host,

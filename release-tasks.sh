@@ -1,3 +1,5 @@
+env
+
 ls -la
 ls -la bin
 make build

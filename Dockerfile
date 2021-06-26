@@ -31,4 +31,6 @@ USER shortener
 COPY --from=builder /shortener/build/shortener /shortener
 COPY --from=builder /shortener/web/ /web/
 
+RUN ls -l /
+
 CMD ["/shortener"]

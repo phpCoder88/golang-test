@@ -26,7 +26,7 @@ RUN make build
 FROM alpine
 
 COPY --from=builder /etc/passwd /etc/passwd
-USER shortener
+#USER shortener
 
 COPY --from=builder /shortener/build/shortener /shortener
 COPY --from=builder /shortener/web/ /web/

@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
@@ -38,6 +39,16 @@ func GetConfig() (*Config, error) {
 	dbConf, err := parseDBConfig()
 	if err != nil {
 		return nil, err
+	}
+
+	port := os.Getenv("PORT")
+	if port != "" {
+		portUint, err := strconv.ParseUint(port, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+
+		serverConf.Port = uint16(portUint)
 	}
 
 	dsn := os.Getenv("DATABASE_URL")

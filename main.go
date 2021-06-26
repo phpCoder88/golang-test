@@ -23,11 +23,11 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port != "" {
-		port = "8080"
+		log.Fatal("$PORT must be set")
 	}
 
 	srv := &http.Server{
-		Addr: "0.0.0.0:" + port,
+		Addr: ":" + port,
 		// Good practice to set timeouts to avoid Slowloris attacks.
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,

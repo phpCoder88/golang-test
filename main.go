@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"log"
 	"net/http"
 	"os"
@@ -15,7 +14,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		err := json.NewEncoder(writer).Encode(map[string]bool{"ok": true})
+		_, err := writer.Write([]byte("Success"))
 		if err != nil {
 			return
 		}

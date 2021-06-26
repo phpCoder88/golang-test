@@ -23,7 +23,7 @@ RUN make build
 #    go build -o ./build/shortener ./cmd/server
 
 # Final stage: Run the binary
-FROM scratch
+FROM alpine
 
 COPY --from=builder /etc/passwd /etc/passwd
 USER shortener

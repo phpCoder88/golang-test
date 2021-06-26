@@ -25,7 +25,7 @@ RUN make build
 # Final stage: Run the binary
 FROM alpine
 
-COPY --from=builder /etc/passwd /etc/passwd
+#COPY --from=builder /etc/passwd /etc/passwd
 #USER shortener
 
 COPY --from=builder /shortener/build/shortener /shortener

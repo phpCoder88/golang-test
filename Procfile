@@ -1,1 +1,1 @@
-web: bin/golang-test
+web: bin/server

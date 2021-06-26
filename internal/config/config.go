@@ -42,6 +42,7 @@ func GetConfig() (*Config, error) {
 	}
 
 	port := os.Getenv("PORT")
+	log.Println(port)
 	intPort, err := strconv.ParseUint(port, 10, 64)
 	if port != "" && err != nil {
 		serverConf.Port = uint16(intPort)

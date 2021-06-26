@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
@@ -20,6 +21,7 @@ type ServerConfig struct {
 }
 
 type DBConfig struct {
+	DSN      string
 	Host     string `default:"localhost"`
 	Port     uint16 `default:"5432"`
 	Name     string `default:"shortener"`
@@ -36,6 +38,11 @@ func GetConfig() (*Config, error) {
 	dbConf, err := parseDBConfig()
 	if err != nil {
 		return nil, err
+	}
+
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn != "" {
+		dbConf.DSN = dsn
 	}
 
 	return &Config{Server: serverConf, DB: dbConf}, nil

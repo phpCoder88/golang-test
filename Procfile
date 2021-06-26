@@ -1,2 +1,2 @@
-release: go build -o bin/server ./cmd/server
+release: go build -o bin/server .
 web: bin/server

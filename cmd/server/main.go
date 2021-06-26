@@ -1,77 +1,67 @@
-// Package main URL shortener API.
-//
-// Open API for URL shortener service
-//
-// Terms Of Service:
-//
-//     Schemes: http
-//     Host: localhost:8000
-//     BasePath: /api
-//     Version: 1.0.0
-//     License: MIT https://opensource.org/licenses/MIT
-//     Contact: Pavel Bobylev<p_bobylev@bk.ru> https://github.com/phpCoder88
-//
-//     Consumes:
-//     - application/json
-//
-//     Produces:
-//     - application/json
-//
-// swagger:meta
 package main
 
 import (
+	"context"
+	"encoding/json"
 	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
 
-	"github.com/phpCoder88/golang-test/internal/config"
-	"github.com/phpCoder88/golang-test/internal/ioc"
-	"github.com/phpCoder88/golang-test/internal/server"
-	"github.com/phpCoder88/golang-test/internal/storages/postgres"
-	"github.com/phpCoder88/golang-test/internal/version"
-
-	"go.uber.org/zap"
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	logger, err := zap.NewProduction()
-	if err != nil {
-		log.Fatalf("can't initialize zap logger: %v", err)
+	r := mux.NewRouter()
+	r.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		err := json.NewEncoder(writer).Encode(map[string]bool{"ok": true})
+		if err != nil {
+			return
+		}
+	})
+	// Add your routes as needed
+
+	port := os.Getenv("PORT")
+	if port != "" {
+		port = "8080"
 	}
 
-	logger = logger.With(
-		zap.String("Version", version.Version),
-		zap.String("BuildDate", version.BuildDate),
-		zap.String("BuildCommit", version.BuildCommit),
-	)
+	srv := &http.Server{
+		Addr: "0.0.0.0:" + port,
+		// Good practice to set timeouts to avoid Slowloris attacks.
+		WriteTimeout: time.Second * 15,
+		ReadTimeout:  time.Second * 15,
+		IdleTimeout:  time.Second * 60,
+		Handler:      r, // Pass our instance of gorilla/mux in.
+	}
 
-	defer func() {
-		err = logger.Sync()
-		if err != nil {
+	// Run our server in a goroutine so that it doesn't block.
+	go func() {
+		if err := srv.ListenAndServe(); err != nil {
 			log.Println(err)
 		}
 	}()
-	slogger := logger.Sugar()
 
-	slogger.Info("Starting the application...")
-	slogger.Info("Reading configuration and initializing resources...")
-	conf, err := config.GetConfig()
+	c := make(chan os.Signal, 1)
+	// We'll accept graceful shutdowns when quit via SIGINT (Ctrl+C)
+	// SIGKILL, SIGQUIT or SIGTERM (Ctrl+/) will not be caught.
+	signal.Notify(c, os.Interrupt)
+
+	// Block until we receive our signal.
+	<-c
+
+	// Create a deadline to wait for.
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	// Doesn't block if no connections, but will otherwise wait
+	// until the timeout deadline.
+	err := srv.Shutdown(ctx)
 	if err != nil {
-		slogger.Error(err)
 		return
 	}
-
-	db, err := postgres.NewPgConnection(conf.DB.Host, conf.DB.Port, conf.DB.Name, conf.DB.User, conf.DB.Password)
-	if err != nil {
-		slogger.Fatal("Can't connect to the database.", "err", err)
-	}
-
-	slogger.Info("Configuring the application units...")
-	container := ioc.NewContainer(db)
-	apiServer := server.NewServer(slogger, conf, container)
-	err = apiServer.Run()
-	if err != nil {
-		slogger.Error("Occurred error during stopping the API server.", "err", err)
-	}
-
-	slogger.Info("The app is calling the last defers and will be stopped.")
+	// Optionally, you could run srv.Shutdown in a goroutine and block on
+	// <-ctx.Done() if your application should wait for other services
+	// to finalize based on context cancellation.
+	log.Println("shutting down")
 }

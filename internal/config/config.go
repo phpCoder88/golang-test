@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"os"
 	"strconv"
 	"time"
@@ -45,6 +46,9 @@ func GetConfig() (*Config, error) {
 	if port != "" && err != nil {
 		serverConf.Port = uint16(intPort)
 	}
+
+	log.Println(serverConf)
+	log.Println(dbConf)
 
 	return &Config{Server: serverConf, DB: dbConf}, nil
 }

@@ -27,7 +27,7 @@ type DBConfig struct {
 	Name     string `default:"shortener"`
 	User     string `default:"shortener"`
 	Password string `default:"123456789"`
-	SSLMode  string `default:"verify-full"`
+	SSLMode  string `envconfig:"ssl_mode" default:"verify-full"`
 }
 
 func GetConfig() (*Config, error) {

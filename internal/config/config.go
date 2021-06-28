@@ -22,12 +22,12 @@ type ServerConfig struct {
 }
 
 type DBConfig struct {
-	DSN      string
 	Host     string `default:"localhost"`
 	Port     uint16 `default:"5432"`
 	Name     string `default:"shortener"`
 	User     string `default:"shortener"`
 	Password string `default:"123456789"`
+	SSLMode  string `default:"verify-full"`
 }
 
 func GetConfig() (*Config, error) {
@@ -49,11 +49,6 @@ func GetConfig() (*Config, error) {
 		}
 
 		serverConf.Port = uint16(portUint)
-	}
-
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn != "" {
-		dbConf.DSN = dsn
 	}
 
 	return &Config{Server: serverConf, DB: dbConf}, nil

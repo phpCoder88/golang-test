@@ -60,6 +60,8 @@ func main() {
 		return
 	}
 
+	log.Println(conf.DB)
+
 	db, err := postgres.NewPgConnection(conf.DB)
 	if err != nil {
 		slogger.Fatal("Can't connect to the database.", "err", err)
